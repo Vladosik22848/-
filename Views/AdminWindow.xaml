@@ -1,0 +1,173 @@
+﻿<Window x:Class="Kursovaya.Views.AdminWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Администратор"
+        Height="520"
+        Width="960"
+        WindowStartupLocation="CenterScreen">
+
+    <DockPanel>
+
+        <!-- Шапка: заголовок, инфо о пользователе и кнопка Выход -->
+        <StackPanel DockPanel.Dock="Top" Margin="10,10,10,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="Панель администратора"
+                           FontSize="18"
+                           VerticalAlignment="Center"
+                           Grid.Column="0"/>
+
+                <StackPanel Grid.Column="1"
+                            Orientation="Horizontal"
+                            VerticalAlignment="Center">
+                    <TextBlock x:Name="UserInfoText"
+                               Text="Пользователь:"
+                               FontSize="12"
+                               Foreground="Gray"
+                               VerticalAlignment="Center"
+                               Margin="0,0,12,0"/>
+                    <Button Content="Выход"
+                            Width="110"
+                            Height="32"
+                            Click="Logout_Click"
+                            Background="#FF5722"
+                            ToolTip="Выйти в окно входа"/>
+                </StackPanel>
+            </Grid>
+
+            <!-- Карточки статистики -->
+            <Border Background="#F5F5F5"
+                    CornerRadius="6"
+                    Padding="10"
+                    Margin="0,8,0,0"
+                    BorderBrush="#E0E0E0"
+                    BorderThickness="1">
+                <WrapPanel ItemWidth="160" ItemHeight="60">
+                    <StackPanel Width="160">
+                        <TextBlock Text="Всего автомобилей"
+                                   FontSize="12"
+                                   Foreground="#757575"/>
+                        <TextBlock x:Name="TotalVehiclesText"
+                                   FontSize="20"
+                                   FontWeight="Bold"/>
+                    </StackPanel>
+
+                    <StackPanel Width="160">
+                        <TextBlock Text="В наличии"
+                                   FontSize="12"
+                                   Foreground="#757575"/>
+                        <TextBlock x:Name="AvailableVehiclesText"
+                                   FontSize="20"
+                                   FontWeight="Bold"/>
+                    </StackPanel>
+
+                    <StackPanel Width="160">
+                        <TextBlock Text="В резерве"
+                                   FontSize="12"
+                                   Foreground="#757575"/>
+                        <TextBlock x:Name="ReservedVehiclesText"
+                                   FontSize="20"
+                                   FontWeight="Bold"/>
+                    </StackPanel>
+
+                    <StackPanel Width="160">
+                        <TextBlock Text="Продано"
+                                   FontSize="12"
+                                   Foreground="#757575"/>
+                        <TextBlock x:Name="SoldVehiclesText"
+                                   FontSize="20"
+                                   FontWeight="Bold"/>
+                    </StackPanel>
+
+                    <StackPanel Width="160">
+                        <TextBlock Text="Клиенты"
+                                   FontSize="12"
+                                   Foreground="#757575"/>
+                        <TextBlock x:Name="TotalClientsText"
+                                   FontSize="20"
+                                   FontWeight="Bold"/>
+                    </StackPanel>
+
+                    <StackPanel Width="160">
+                        <TextBlock Text="Пользователи"
+                                   FontSize="12"
+                                   Foreground="#757575"/>
+                        <TextBlock x:Name="TotalUsersText"
+                                   FontSize="20"
+                                   FontWeight="Bold"/>
+                    </StackPanel>
+                </WrapPanel>
+            </Border>
+
+            <!-- Многострочная сводка (скрыта, можно включить при необходимости) -->
+            <TextBlock x:Name="StatisticsText"
+                       Visibility="Collapsed"
+                       Margin="0,6,0,0"/>
+        </StackPanel>
+
+        <!-- Основной контент -->
+        <TabControl Margin="10">
+            <!-- Пользователи -->
+            <TabItem Header="Пользователи">
+                <Grid Margin="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
+                        <Button Content="Добавить"
+                                Width="110"
+                                Height="28"
+                                Click="AddUser_Click"/>
+                        <Button Content="Удалить"
+                                Width="110"
+                                Height="28"
+                                Margin="6,0,0,0"
+                                Click="DeleteUser_Click"/>
+                        <Button Content="Сохранить"
+                                Width="110"
+                                Height="28"
+                                Margin="6,0,0,0"
+                                Click="SaveUsers_Click"/>
+                        <Button Content="Сброс пароля"
+                                Width="130"
+                                Height="28"
+                                Margin="6,0,0,0"
+                                Click="ResetPassword_Click"/>
+                    </StackPanel>
+
+                    <DataGrid x:Name="UsersGrid"
+                              Grid.Row="1"
+                              AutoGenerateColumns="False"
+                              IsReadOnly="False"
+                              CanUserAddRows="True"
+                              SelectionMode="Single">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Email"
+                                                Binding="{Binding Email, UpdateSourceTrigger=PropertyChanged}"
+                                                Width="2*"/>
+                            <DataGridTextColumn Header="Телефон"
+                                                Binding="{Binding Phone, UpdateSourceTrigger=PropertyChanged}"
+                                                Width="*"/>
+                            <DataGridTextColumn Header="Роль"
+                                                Binding="{Binding Role, UpdateSourceTrigger=PropertyChanged}"
+                                                Width="*"/>
+                            <DataGridCheckBoxColumn Header="Активен"
+                                                    Binding="{Binding IsActive, UpdateSourceTrigger=PropertyChanged}"
+                                                    Width="Auto"/>
+                            <DataGridTextColumn Header="Создан"
+                                                Binding="{Binding CreatedAt, StringFormat={}{0:dd.MM.yyyy HH:mm}}"
+                                                IsReadOnly="True"
+                                                Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </DockPanel>
+</Window>

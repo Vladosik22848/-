@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="9c1070bca9ec42ff8b6c8b11ddb41861" Name="Diagram1" ZoomLevel="74">
+        <EntityTypeShape EntityType="user149_dbModel.Clients" Width="1.5" PointX="9.625" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="user149_dbModel.Services" Width="1.5" PointX="11" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="user149_dbModel.Users" Width="1.5" PointX="6.875" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="user149_dbModel.Vehicles" Width="1.5" PointX="12.75" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="user149_dbModel.WorkOrderItems" Width="1.5" PointX="3" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="user149_dbModel.WorkOrders" Width="1.5" PointX="8.75" PointY="4.5" IsExpanded="true" />
+        <AssociationConnector Association="user149_dbModel.FK_Vehicles_Clients_OwnerId" ManuallyRouted="false" />
+        <AssociationConnector Association="user149_dbModel.FK_WorkOrderItems_Services_ServiceId" ManuallyRouted="false" />
+        <AssociationConnector Association="user149_dbModel.FK_WorkOrderItems_Users_AssignedTo" ManuallyRouted="false" />
+        <AssociationConnector Association="user149_dbModel.FK_WorkOrders_Users_CreatedBy" ManuallyRouted="false" />
+        <AssociationConnector Association="user149_dbModel.FK_WorkOrders_Vehicles_VehicleId" ManuallyRouted="false" />
+        <AssociationConnector Association="user149_dbModel.FK_WorkOrderItems_WorkOrders_WorkOrderId" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="user149_dbModel.Sales" Width="1.5" PointX="10.25" PointY="11.625" />
+        <AssociationConnector Association="user149_dbModel.FK_Sales_Clients_ClientId" />
+        <AssociationConnector Association="user149_dbModel.FK_Sales_Users_SellerId" />
+        <AssociationConnector Association="user149_dbModel.FK_Sales_Vehicles_VehicleId" />
+        <EntityTypeShape EntityType="user149_dbModel.Brands" Width="1.5" PointX="4.625" PointY="7.875" />
+        <EntityTypeShape EntityType="user149_dbModel.Deliveries" Width="1.5" PointX="19.875" PointY="8.125" />
+        <EntityTypeShape EntityType="user149_dbModel.Models" Width="1.5" PointX="7.125" PointY="5.125" />
+        <EntityTypeShape EntityType="user149_dbModel.Reservations" Width="1.5" PointX="15.625" PointY="7.125" />
+        <EntityTypeShape EntityType="user149_dbModel.Suppliers" Width="1.5" PointX="17.5" PointY="6.375" />
+        <EntityTypeShape EntityType="user149_dbModel.VehiclePhotos" Width="1.5" PointX="18" PointY="11.25" />
+        <AssociationConnector Association="user149_dbModel.FK_Models_Brands_BrandId" ManuallyRouted="true" >
+          <ConnectorPoint PointX="6.125" PointY="9.0574446614583337" />
+          <ConnectorPoint PointX="7.875" PointY="9.0574446614583337" />
+          <ConnectorPoint PointX="7.875" PointY="7.4898893229166674" />
+        </AssociationConnector>
+        <AssociationConnector Association="user149_dbModel.FK_Reservations_Clients_ClientId" />
+        <AssociationConnector Association="user149_dbModel.FK_Deliveries_Suppliers_SupplierId" />
+        <AssociationConnector Association="user149_dbModel.FK_Deliveries_Vehicles_VehicleId" />
+        <AssociationConnector Association="user149_dbModel.FK_Reservations_Users_ReservedBy" />
+        <AssociationConnector Association="user149_dbModel.FK_Reservations_Vehicles_VehicleId" />
+        <AssociationConnector Association="user149_dbModel.FK_VehiclePhotos_Vehicles_VehicleId" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

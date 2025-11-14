@@ -1,0 +1,96 @@
+﻿<Window x:Class="Kursovaya.Views.AddVehicleWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Добавление автомобиля"
+        Height="640" Width="600"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        Background="{StaticResource BackgroundGradient}">
+    <Border CornerRadius="10"
+            Background="White"
+            BorderBrush="#2196F3"
+            BorderThickness="2"
+            Margin="15">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Border Grid.Row="0" Background="{StaticResource ButtonGradient}" CornerRadius="8,8,0,0" Padding="20,15">
+                <TextBlock Text="➕ ДОБАВЛЕНИЕ АВТОМОБИЛЯ"
+                           FontSize="18" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center"/>
+            </Border>
+
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="25,18,25,10">
+                <StackPanel>
+                    <UniformGrid Columns="2" Rows="6" Margin="0,0,0,10">
+                        <StackPanel Margin="0,0,10,10">
+                            <TextBlock Text="VIN" FontSize="13" FontWeight="SemiBold" Foreground="{StaticResource TextSecondaryColor}"/>
+                            <TextBox x:Name="VinBox" Height="34" FontSize="14"/>
+                        </StackPanel>
+                        <StackPanel Margin="10,0,0,10">
+                            <TextBlock Text="Гос. номер" FontSize="13" FontWeight="SemiBold" Foreground="{StaticResource TextSecondaryColor}"/>
+                            <TextBox x:Name="PlateBox" Height="34" FontSize="14"/>
+                        </StackPanel>
+
+                        <StackPanel Margin="0,0,10,10">
+                            <TextBlock Text="Бренд *" FontSize="13" FontWeight="SemiBold" Foreground="{StaticResource TextSecondaryColor}"/>
+                            <TextBox x:Name="BrandBox" Height="34" FontSize="14" TextChanged="OnChanged"/>
+                        </StackPanel>
+                        <StackPanel Margin="10,0,0,10">
+                            <TextBlock Text="Модель *" FontSize="13" FontWeight="SemiBold" Foreground="{StaticResource TextSecondaryColor}"/>
+                            <TextBox x:Name="ModelBox" Height="34" FontSize="14" TextChanged="OnChanged"/>
+                        </StackPanel>
+
+                        <StackPanel Margin="0,0,10,10">
+                            <TextBlock Text="Год *" FontSize="13" FontWeight="SemiBold" Foreground="{StaticResource TextSecondaryColor}"/>
+                            <ComboBox x:Name="YearCombo" Height="34" FontSize="14" SelectionChanged="OnChanged"/>
+                        </StackPanel>
+                        <StackPanel Margin="10,0,0,10">
+                            <TextBlock Text="Цвет" FontSize="13" FontWeight="SemiBold" Foreground="{StaticResource TextSecondaryColor}"/>
+                            <ComboBox x:Name="ColorCombo" Height="34" FontSize="14"/>
+                        </StackPanel>
+
+                        <StackPanel Margin="0,0,10,10">
+                            <TextBlock Text="Пробег, км" FontSize="13" FontWeight="SemiBold" Foreground="{StaticResource TextSecondaryColor}"/>
+                            <TextBox x:Name="MileageBox" Height="34" FontSize="14" PreviewTextInput="DigitsOnly"/>
+                        </StackPanel>
+                        <StackPanel Margin="10,0,0,10">
+                            <TextBlock Text="Цена, ₽ *" FontSize="13" FontWeight="SemiBold" Foreground="{StaticResource TextSecondaryColor}"/>
+                            <TextBox x:Name="PriceBox" Height="34" FontSize="14" TextChanged="OnChanged" PreviewTextInput="DigitsOnly"/>
+                        </StackPanel>
+
+                        <StackPanel Margin="0,0,10,10">
+                            <TextBlock Text="Статус *" FontSize="13" FontWeight="SemiBold" Foreground="{StaticResource TextSecondaryColor}"/>
+                            <ComboBox x:Name="StatusCombo" Height="34" FontSize="14" SelectionChanged="OnChanged"/>
+                        </StackPanel>
+                        <StackPanel Margin="10,0,0,10">
+                            <TextBlock Text="Топливо" FontSize="13" FontWeight="SemiBold" Foreground="{StaticResource TextSecondaryColor}"/>
+                            <ComboBox x:Name="FuelCombo" Height="34" FontSize="14"/>
+                        </StackPanel>
+
+                        <StackPanel Margin="0,0,10,10">
+                            <TextBlock Text="КПП" FontSize="13" FontWeight="SemiBold" Foreground="{StaticResource TextSecondaryColor}"/>
+                            <ComboBox x:Name="TransmissionCombo" Height="34" FontSize="14"/>
+                        </StackPanel>
+                        <StackPanel Margin="10,0,0,10">
+                            <TextBlock Text="Объем двигателя, л" FontSize="13" FontWeight="SemiBold" Foreground="{StaticResource TextSecondaryColor}"/>
+                            <TextBox x:Name="EngineVolumeBox" Height="34" FontSize="14" PreviewTextInput="DecimalOnly"/>
+                        </StackPanel>
+                    </UniformGrid>
+
+                    <TextBlock Text="Поля с * обязательны для заполнения" FontSize="12" Foreground="{StaticResource TextSecondaryColor}"/>
+                </StackPanel>
+            </ScrollViewer>
+
+            <Border Grid.Row="2" Background="#F5F5F5" CornerRadius="0,0,8,8" Padding="16,12" BorderBrush="#E0E0E0" BorderThickness="0,1,0,0">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Content="Отмена" Width="120" Height="36" Click="Cancel_Click" Background="#757575" Margin="0,0,8,0"/>
+                    <Button x:Name="AddButton" Content="Добавить" Width="130" Height="36" Click="Add_Click" IsEnabled="False"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Border>
+</Window>

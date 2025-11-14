@@ -1,0 +1,542 @@
+﻿<Window x:Class="Kursovaya.Views.EmployeeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Рабочее место сотрудника - Автосалон" 
+        Height="700" Width="1200" 
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource BackgroundGradient}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Верхняя панель -->
+        <Border Grid.Row="0" 
+                Background="{StaticResource ButtonGradient}"
+                Padding="20,15">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="💼 РАБОЧЕЕ МЕСТО СОТРУДНИКА" 
+                               FontSize="20" 
+                               FontWeight="Bold" 
+                               Foreground="White"/>
+                    <TextBlock x:Name="EmployeeInfoText" 
+                               Text="Сотрудник" 
+                               FontSize="13" 
+                               Foreground="#E3F2FD"
+                               Margin="0,3,0,0"/>
+                </StackPanel>
+                
+                <Button Grid.Column="1" 
+                        Content="Выход" 
+                        Width="100" 
+                        Height="35"
+                        Click="Logout_Click"
+                        Background="#FF5722"
+                        HorizontalAlignment="Center" Margin="0,6,0,6">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                            <Setter Property="Background">
+                                <Setter.Value>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                        <GradientStop Color="#FF7043" Offset="0"/>
+                                        <GradientStop Color="#FF5722" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#E64A19"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </Grid>
+        </Border>
+
+        <!-- Основной контент -->
+        <TabControl Grid.Row="1" Margin="15">
+            <!-- Клиенты -->
+            <TabItem Header="👥 Клиенты">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Border Grid.Row="0" 
+                            Background="White" 
+                            CornerRadius="5" 
+                            Padding="15" 
+                            Margin="0,0,0,10"
+                            BorderBrush="#E0E0E0"
+                            BorderThickness="1">
+                        <StackPanel Orientation="Horizontal">
+                            <Button Content="➕ Добавить" 
+                                    Click="AddClient_Click" 
+                                    Width="130" 
+                                    Height="35"
+                                    Margin="0,0,8,0"/>
+                            <Button Content="🗑️ Удалить" 
+                                    Click="DeleteClient_Click" 
+                                    Width="130" 
+                                    Height="35"
+                                    Margin="0,0,8,0"/>
+                            <Button Content="💾 Сохранить" 
+                                    Click="SaveClients_Click" 
+                                    Width="130" 
+                                    Height="35"/>
+                        </StackPanel>
+                    </Border>
+
+                    <DataGrid x:Name="ClientsGrid" 
+                              Grid.Row="1"
+                              AutoGenerateColumns="False" 
+                              IsReadOnly="False" 
+                              CanUserAddRows="True"
+                              SelectionMode="Single">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ФИО" 
+                                                Binding="{Binding FullName, UpdateSourceTrigger=PropertyChanged}" 
+                                                Width="2*"
+                                                MinWidth="150">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="TextWrapping" Value="NoWrap"/>
+                                        <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Телефон" 
+                                                Binding="{Binding Phone, UpdateSourceTrigger=PropertyChanged}" 
+                                                Width="*"
+                                                MinWidth="120">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="TextWrapping" Value="NoWrap"/>
+                                        <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Email" 
+                                                Binding="{Binding Email, UpdateSourceTrigger=PropertyChanged}" 
+                                                Width="*"
+                                                MinWidth="150">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="TextWrapping" Value="NoWrap"/>
+                                        <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Примечание" 
+                                                Binding="{Binding Notes, UpdateSourceTrigger=PropertyChanged}" 
+                                                Width="2*"
+                                                MinWidth="150">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="TextWrapping" Value="Wrap"/>
+                                        <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Создан" 
+                                                Binding="{Binding CreatedAt, StringFormat={}{0:dd.MM.yyyy HH:mm}}" 
+                                                IsReadOnly="True" 
+                                                Width="*"
+                                                MinWidth="130">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="TextWrapping" Value="NoWrap"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+
+            <!-- Автомобили -->
+            <TabItem Header="🚗 Автомобили">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Border Grid.Row="0" 
+                            Background="White" 
+                            CornerRadius="5" 
+                            Padding="15" 
+                            Margin="0,0,0,10"
+                            BorderBrush="#E0E0E0"
+                            BorderThickness="1">
+                        <StackPanel Orientation="Horizontal">
+                            <Button Content="➕ Добавить" 
+                                    Click="AddVehicle_Click" 
+                                    Width="130" 
+                                    Height="35"
+                                    Margin="0,0,8,0"/>
+                            <Button Content="🗑️ Удалить" 
+                                    Click="DeleteVehicle_Click" 
+                                    Width="130" 
+                                    Height="35"
+                                    Margin="0,0,8,0"/>
+                            <Button Content="💾 Сохранить" 
+                                    Click="SaveVehicles_Click" 
+                                    Width="130" 
+                                    Height="35"
+                                    Margin="0,0,12,0"/>
+                            <Button Content="💰 Продать" 
+                                    Click="SellVehicle_Click" 
+                                    Width="130" 
+                                    Height="35"
+                                    Margin="0,0,8,0"
+                                    Background="#4CAF50">
+                                <Button.Style>
+                                    <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                        <Setter Property="Background">
+                                            <Setter.Value>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                    <GradientStop Color="#66BB6A" Offset="0"/>
+                                                    <GradientStop Color="#4CAF50" Offset="1"/>
+                                                </LinearGradientBrush>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="#388E3C"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                            <Button Content="🔒 Зарезервировать" 
+                                    Click="ReserveVehicle_Click" 
+                                    Width="160" 
+                                    Height="35"
+                                    Background="#9C27B0">
+                                <Button.Style>
+                                    <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                        <Setter Property="Background">
+                                            <Setter.Value>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                    <GradientStop Color="#BA68C8" Offset="0"/>
+                                                    <GradientStop Color="#9C27B0" Offset="1"/>
+                                                </LinearGradientBrush>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="#7B1FA2"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                        </StackPanel>
+                    </Border>
+
+                    <DataGrid x:Name="VehiclesGrid" 
+                              Grid.Row="1"
+                              AutoGenerateColumns="False" 
+                              IsReadOnly="False" 
+                              CanUserAddRows="True"
+                              SelectionMode="Single">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="VIN" 
+                                                Binding="{Binding VIN, UpdateSourceTrigger=PropertyChanged}" 
+                                                Width="*"/>
+                            <DataGridTextColumn Header="Бренд" 
+                                                Binding="{Binding Brand, UpdateSourceTrigger=PropertyChanged}" 
+                                                Width="*"/>
+                            <DataGridTextColumn Header="Модель" 
+                                                Binding="{Binding Model, UpdateSourceTrigger=PropertyChanged}" 
+                                                Width="*"/>
+                            <DataGridTextColumn Header="Год" 
+                                                Binding="{Binding Year, UpdateSourceTrigger=PropertyChanged}" 
+                                                Width="*"/>
+                            <DataGridTextColumn Header="Цвет" 
+                                                Binding="{Binding Color, UpdateSourceTrigger=PropertyChanged}" 
+                                                Width="*"/>
+                            <DataGridTextColumn Header="Пробег" 
+                                                Binding="{Binding Mileage, UpdateSourceTrigger=PropertyChanged}" 
+                                                Width="*"/>
+                            <DataGridTextColumn Header="Цена" 
+                                                Binding="{Binding Price, StringFormat={}{0:N0} ₽, UpdateSourceTrigger=PropertyChanged}" 
+                                                Width="*"/>
+                            
+                            <DataGridTextColumn Header="Создан" 
+                                                Binding="{Binding CreatedAt, StringFormat={}{0:dd.MM.yyyy HH:mm}}" 
+                                                IsReadOnly="True" 
+                                                Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+
+            <!-- Продажи -->
+            <TabItem Header="💰 Продажи">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Border Grid.Row="0" 
+                            Background="White" 
+                            CornerRadius="5" 
+                            Padding="15" 
+                            Margin="0,0,0,10"
+                            BorderBrush="#E0E0E0"
+                            BorderThickness="1">
+                        <StackPanel>
+                            <TextBlock Text="Оформление продажи" 
+                                       FontSize="16" 
+                                       FontWeight="SemiBold"
+                                       Foreground="{StaticResource PrimaryColor}"
+                                       Margin="0,0,0,12"/>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Автомобиль:" 
+                                           VerticalAlignment="Center" 
+                                           Margin="0,0,8,0"
+                                           FontWeight="SemiBold"
+                                           Width="90"/>
+                                <ComboBox x:Name="SaleVehicleCombo" 
+                                          Width="300" 
+                                          Margin="0,0,20,0"
+                                          SelectedValuePath="Id">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock>
+                                                <Run Text="{Binding Brand}"/>
+                                                <Run Text=" "/>
+                                                <Run Text="{Binding Model}"/>
+                                                <Run Text=" ("/>
+                                                <Run Text="{Binding Year}"/>
+                                                <Run Text=") - "/>
+                                                <Run Text="{Binding Price, StringFormat={}{0:N0} ₽}"/>
+                                            </TextBlock>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                                <TextBlock Text="Покупатель:" 
+                                           VerticalAlignment="Center" 
+                                           Margin="0,0,8,0"
+                                           FontWeight="SemiBold"
+                                           Width="90"/>
+                                <ComboBox x:Name="SaleClientCombo" 
+                                          Width="300" 
+                                          Margin="0,0,20,0"
+                                          DisplayMemberPath="FullName" 
+                                          SelectedValuePath="Id"/>
+                                <Button Content="✅ Оформить продажу" 
+                                        Click="ProcessSale_Click" 
+                                        Width="180" 
+                                        Height="40"
+                                        FontSize="15"
+                                        Background="#4CAF50">
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                            <Setter Property="Background">
+                                                <Setter.Value>
+                                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                        <GradientStop Color="#66BB6A" Offset="0"/>
+                                                        <GradientStop Color="#4CAF50" Offset="1"/>
+                                                    </LinearGradientBrush>
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="#388E3C"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Grid.Row="1" 
+                            Background="#E8F5E9" 
+                            CornerRadius="5" 
+                            Padding="12" 
+                            Margin="0,0,0,10"
+                            BorderBrush="#4CAF50"
+                            BorderThickness="1">
+                        <TextBlock x:Name="SalesInfoText" 
+                                   TextWrapping="Wrap"
+                                   FontSize="13"
+                                   Foreground="#2E7D32"/>
+                    </Border>
+
+                    <DataGrid x:Name="SoldVehiclesGrid" 
+                              Grid.Row="2"
+                              AutoGenerateColumns="False" 
+                              IsReadOnly="True"
+                              SelectionMode="Single">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="VIN" 
+                                                Binding="{Binding VIN}" 
+                                                Width="*"/>
+                            <DataGridTextColumn Header="Бренд" 
+                                                Binding="{Binding Brand}" 
+                                                Width="*"/>
+                            <DataGridTextColumn Header="Модель" 
+                                                Binding="{Binding Model}" 
+                                                Width="*"/>
+                            <DataGridTextColumn Header="Год" 
+                                                Binding="{Binding Year}" 
+                                                Width="*"/>
+                            <DataGridTextColumn Header="Цена" 
+                                                Binding="{Binding Price, StringFormat={}{0:N0} ₽}" 
+                                                Width="*"/>
+                            <DataGridTextColumn Header="Покупатель" 
+                                                Binding="{Binding Clients.FullName}" 
+                                                Width="2*"/>
+                            <DataGridTextColumn Header="Дата продажи" 
+                                                Binding="{Binding CreatedAt, StringFormat={}{0:dd.MM.yyyy HH:mm}}" 
+                                                Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+
+            <!-- Поиск -->
+            <TabItem Header="🔍 Поиск">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Border Grid.Row="0" 
+                            Background="White" 
+                            CornerRadius="5" 
+                            Padding="15" 
+                            Margin="0,0,0,10"
+                            BorderBrush="#E0E0E0"
+                            BorderThickness="1">
+                        <StackPanel>
+                            <TextBlock Text="Поиск автомобилей" 
+                                       FontSize="16" 
+                                       FontWeight="SemiBold"
+                                       Foreground="{StaticResource PrimaryColor}"
+                                       Margin="0,0,0,12"/>
+                            <UniformGrid Columns="3" Rows="2">
+                                <StackPanel Orientation="Horizontal" Margin="0,0,10,10">
+                                    <TextBlock Text="VIN:" 
+                                               Margin="0,0,6,0" 
+                                               VerticalAlignment="Center"
+                                               Width="60"/>
+                                    <TextBox x:Name="SearchVin" 
+                                             Width="200"/>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal" Margin="0,0,10,10">
+                                    <TextBlock Text="Гос№:" 
+                                               Margin="0,0,6,0" 
+                                               VerticalAlignment="Center"
+                                               Width="60"/>
+                                    <TextBox x:Name="SearchPlate" 
+                                             Width="200"/>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal" Margin="0,0,10,10">
+                                    <TextBlock Text="Бренд:" 
+                                               Margin="0,0,6,0" 
+                                               VerticalAlignment="Center"
+                                               Width="60"/>
+                                    <TextBox x:Name="SearchBrand" 
+                                             Width="200"/>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal" Margin="0,0,10,10">
+                                    <TextBlock Text="Модель:" 
+                                               Margin="0,0,6,0" 
+                                               VerticalAlignment="Center"
+                                               Width="60"/>
+                                    <TextBox x:Name="SearchModel" 
+                                             Width="200"/>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal" Margin="0,0,10,10">
+                                    <Button Content="🔍 Найти" 
+                                            Click="DoSearch_Click" 
+                                            Width="120" 
+                                            Height="35"/>
+                                    <Button Content="🔄 Сброс" 
+                                            Click="ResetSearch_Click" 
+                                            Width="120" 
+                                            Height="35"
+                                            Margin="8,0,0,0"
+                                            Background="#757575">
+                                        <Button.Style>
+                                            <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                                <Setter Property="Background">
+                                                    <Setter.Value>
+                                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                            <GradientStop Color="#9E9E9E" Offset="0"/>
+                                                            <GradientStop Color="#757575" Offset="1"/>
+                                                        </LinearGradientBrush>
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Background" Value="#616161"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button>
+                                </StackPanel>
+                            </UniformGrid>
+                        </StackPanel>
+                    </Border>
+
+                    <DataGrid x:Name="SearchResultsGrid" 
+                              Grid.Row="1"
+                              AutoGenerateColumns="False" 
+                              IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="VIN" 
+                                                Binding="{Binding VIN}" 
+                                                Width="*"/>
+                            <DataGridTextColumn Header="Бренд" 
+                                                Binding="{Binding Brand}" 
+                                                Width="*"/>
+                            <DataGridTextColumn Header="Модель" 
+                                                Binding="{Binding Model}" 
+                                                Width="*"/>
+                            <DataGridTextColumn Header="Год" 
+                                                Binding="{Binding Year}" 
+                                                Width="*"/>
+                            <DataGridTextColumn Header="Цвет" 
+                                                Binding="{Binding Color}" 
+                                                Width="*"/>
+                            <DataGridTextColumn Header="Пробег" 
+                                                Binding="{Binding Mileage}" 
+                                                Width="*"/>
+                            <DataGridTextColumn Header="Цена" 
+                                                Binding="{Binding Price, StringFormat={}{0:N0} ₽}" 
+                                                Width="*"/>
+                            <DataGridTextColumn Header="Статус" 
+                                                Binding="{Binding Status}" 
+                                                Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
