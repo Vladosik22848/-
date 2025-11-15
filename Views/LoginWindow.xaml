@@ -16,8 +16,6 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-
-            <!-- Заголовок -->
             <Border Grid.Row="0" 
                     Background="{StaticResource ButtonGradient}"
                     CornerRadius="8,8,0,0"
@@ -36,7 +34,6 @@
                 </StackPanel>
             </Border>
 
-            <!-- Форма входа -->
             <StackPanel Grid.Row="1" 
                         Margin="40,30,40,30"
                         VerticalAlignment="Center">

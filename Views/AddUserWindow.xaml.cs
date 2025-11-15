@@ -17,20 +17,19 @@ namespace Kursovaya.Views
         {
             InitializeComponent();
             Closed += (s, e) => _db.Dispose();
-            
-            // Загружаем пользователей для проверки
+        
             try
             {
                 _db.Users.Load();
             }
             catch
             {
-                // Игнорируем ошибки загрузки
+               
             }
             
             EmailBox.Focus();
             
-            // Инициализация валидации
+         
             ValidateForm();
         }
 
@@ -111,7 +110,7 @@ namespace Kursovaya.Views
             var phone = PhoneBox.Text?.Trim();
             var password = PasswordBox.Password;
             
-            // Получаем роль из ComboBox
+       
             var roleItem = RoleCombo.SelectedItem as System.Windows.Controls.ComboBoxItem;
             var role = roleItem?.Tag?.ToString();
             
@@ -141,7 +140,7 @@ namespace Kursovaya.Views
                 return;
             }
 
-            // Проверяем существование пользователя в базе данных
+           
             try
             {
                 _db.Users.Load();
@@ -165,7 +164,7 @@ namespace Kursovaya.Views
                 password = "12345";
             }
 
-            // Проверяем длину полей
+          
             if (email.Length > 255)
             {
                 MessageBox.Show("Email слишком длинный (максимум 255 символов).", "Ошибка", 
@@ -189,7 +188,7 @@ namespace Kursovaya.Views
                 return;
             }
 
-            // Проверяем, что телефон уникален (если указан)
+          
             if (!string.IsNullOrWhiteSpace(phone))
             {
                 try
@@ -211,7 +210,7 @@ namespace Kursovaya.Views
                 }
             }
 
-            // Проверяем, что роль не пустая
+           
             if (string.IsNullOrWhiteSpace(role))
             {
                 MessageBox.Show("Выберите роль пользователя.", "Ошибка", 
@@ -221,10 +220,10 @@ namespace Kursovaya.Views
 
             try
             {
-                // Хешируем пароль
+               
                 string passwordHash = PasswordHasher.Hash(password);
                 
-                // Проверяем длину хеша
+               
                 if (passwordHash.Length > 255)
                 {
                     MessageBox.Show("Ошибка: хеш пароля слишком длинный.", "Ошибка", 
@@ -232,10 +231,10 @@ namespace Kursovaya.Views
                     return;
                 }
 
-                // Нормализуем роль (убираем пробелы, проверяем регистр)
+                
                 string normalizedRole = role.Trim();
                 
-                // Проверяем, что роль соответствует разрешенным значениям
+                
                 if (normalizedRole != "Admin" && normalizedRole != "Employee" && normalizedRole != "Warehouse")
                 {
                     MessageBox.Show($"Недопустимая роль: {normalizedRole}\n\nРазрешенные роли: Admin, Employee, Warehouse", 
@@ -247,7 +246,7 @@ namespace Kursovaya.Views
                 {
                     Email = email,
                     Phone = string.IsNullOrWhiteSpace(phone) ? null : phone,
-                    Role = normalizedRole, // Используем нормализованную роль
+                    Role = normalizedRole, 
                     IsActive = isActive,
                     CreatedAt = DateTime.Now,
                     PasswordHash = passwordHash
@@ -266,7 +265,7 @@ namespace Kursovaya.Views
             {
                 string errorMessage = "Ошибка при добавлении пользователя в базу данных.";
                 
-                // Получаем все вложенные исключения
+             
                 Exception inner = dbEx;
                 int level = 0;
                 while (inner != null && level < 5)
@@ -274,17 +273,17 @@ namespace Kursovaya.Views
                     var sqlEx = inner as System.Data.SqlClient.SqlException;
                     if (sqlEx != null)
                     {
-                        // Обрабатываем специфичные ошибки SQL Server
+                      
                         switch (sqlEx.Number)
                         {
-                            case 2601: // Нарушение уникального индекса (duplicate key)
-                            case 2627: // Нарушение ограничения PRIMARY KEY или UNIQUE
+                            case 2601: 
+                            case 2627: 
                                 errorMessage = "Пользователь с таким Email или телефоном уже существует в базе данных.";
                                 break;
-                            case 515: // Cannot insert the value NULL into column
+                            case 515: 
                                 errorMessage = "Ошибка: одно из обязательных полей не заполнено.";
                                 break;
-                            case 8152: // String or binary data would be truncated
+                            case 8152: 
                                 errorMessage = "Ошибка: одно из полей слишком длинное.";
                                 break;
                             default:

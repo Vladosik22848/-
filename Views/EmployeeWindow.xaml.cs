@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
-using System.Linq;                     // ВАЖНО: для LINQ и Contains
+using System.Linq;                   
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -66,7 +66,7 @@ namespace Kursovaya.Views
             UpdateSalesInfo();
         }
 
-        // ===== Clients =====
+  
         private void AddClient_Click(object sender, RoutedEventArgs e)
         {
             var wnd = new AddClientWindow { Owner = this };
@@ -177,7 +177,7 @@ namespace Kursovaya.Views
             BindAll();
         }
 
-        // ===== Vehicles =====
+ 
         private void AddVehicle_Click(object sender, RoutedEventArgs e)
         {
             var wnd = new AddVehicleWindow { Owner = this };
@@ -300,7 +300,6 @@ namespace Kursovaya.Views
             }
         }
 
-        // ===== Sales =====
         private void ProcessSale_Click(object sender, RoutedEventArgs e)
         {
             var vehicle = SaleVehicleCombo.SelectedItem as Vehicles;
@@ -390,7 +389,6 @@ namespace Kursovaya.Views
             SalesInfoText.Text = $"Всего продано автомобилей: {soldCount}\nЗаписей в Sales: {salesCount}";
         }
 
-        // ===== Search =====
         private void DoSearch_Click(object sender, RoutedEventArgs e)
         {
             var vin = (SearchVin.Text ?? "").Trim().ToLowerInvariant();
@@ -417,7 +415,6 @@ namespace Kursovaya.Views
             SearchResultsGrid.ItemsSource = VehiclesLookup;
         }
 
-        // ===== Helpers =====
         private bool TrySaveDetailed(string title)
         {
             try
@@ -468,7 +465,6 @@ namespace Kursovaya.Views
             return salon;
         }
 
-        // ===== Статусы =====
         private string[] GetAllowedVehicleStatuses()
         {
             try
@@ -536,7 +532,6 @@ WHERE o.name = N'Vehicles' AND cc.name = N'CK_Vehicles_Status';
         private string StatusReserved => FindStatus("резерв", "В резерве");
         private string StatusSold => FindStatus("продан", "Продано");
 
-        // ===== Logout =====
         private void Logout_Click(object sender, RoutedEventArgs e)
         {
             if (MessageBox.Show("Вы уверены, что хотите выйти?", "Выход",

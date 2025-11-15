@@ -22,7 +22,7 @@ namespace Kursovaya.Views
         {
             InitializeComponent();
             Closed += (s, e) => _db.Dispose();
-            try { _db.Clients.Load(); } catch { /* ignore */ }
+            try { _db.Clients.Load(); } catch {  }
         }
 
         private void OnChanged(object sender, System.Windows.Controls.TextChangedEventArgs e) => ValidateForm();
@@ -86,12 +86,7 @@ namespace Kursovaya.Views
 
             try
             {
-                // При желании можно ограничить дубликаты email
-                // if (!string.IsNullOrWhiteSpace(email) && _db.Clients.Any(c => c.Email == email))
-                // {
-                //     MessageBox.Show("Клиент с таким Email уже существует.", "Клиент", MessageBoxButton.OK, MessageBoxImage.Warning);
-                //     return;
-                // }
+
 
                 NewClient = new Clients
                 {

@@ -31,7 +31,7 @@ namespace Kursovaya.Views
             InitializeComponent();
             Closed += (s, e) => _db.Dispose();
 
-            try { _db.Suppliers.Load(); } catch { /* ignore */ }
+            try { _db.Suppliers.Load(); } catch {  }
             SupplierCombo.ItemsSource = _db.Suppliers.Local;
 
             DeliveryDatePicker.SelectedDate = DateTime.Today;
@@ -46,14 +46,13 @@ namespace Kursovaya.Views
             StatusCombo.SelectedItem = _allowedStatuses.First();
             YearCombo.SelectedItem = DateTime.Now.Year;
 
-            // Подсказка, если поставщиков нет
             NoSuppliersHint.Visibility = (_db.Suppliers.Local.Count == 0)
                 ? Visibility.Visible : Visibility.Collapsed;
 
             ValidateForm();
         }
 
-        // Обработчики изменений — просто дергают ValidateForm
+        
         private void OnTextChanged(object sender, TextChangedEventArgs e) => ValidateForm();
         private void OnSelectionChanged(object sender, SelectionChangedEventArgs e) => ValidateForm();
         private void OnDateChanged(object sender, SelectionChangedEventArgs e) => ValidateForm();

@@ -28,7 +28,7 @@ namespace Kursovaya.Views
             _db.Users.Load();
             _db.Clients.Load();
 
-            // Пользователи по умолчанию
+      
             if (!_db.Users.Local.Any(u => u.Email == "admin@example.com"))
             {
                 _db.Users.Add(new Users
@@ -68,7 +68,6 @@ namespace Kursovaya.Views
                 });
             }
 
-            // Системный клиент для OwnerId по умолчанию
             if (!_db.Clients.Local.Any(c => c.FullName == SalonClientName))
             {
                 _db.Clients.Add(new Clients
@@ -117,7 +116,7 @@ namespace Kursovaya.Views
             if (!stored.StartsWith("PBKDF2$", StringComparison.Ordinal))
             {
                 user.PasswordHash = PasswordHasher.Hash(pass);
-                try { _db.SaveChanges(); } catch { /* ignore */ }
+                try { _db.SaveChanges(); } catch {  }
             }
 
             Window next = null;

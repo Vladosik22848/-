@@ -15,7 +15,7 @@ namespace Kursovaya.Views
         private readonly user149_dbEntities _db = new user149_dbEntities();
         public Vehicles NewVehicle { get; private set; }
 
-        // Разрешённые значения для выпадающих списков
+    
         private readonly string[] _colors = {
             "Белый","Черный","Серый","Серебристый","Синий","Красный","Зеленый","Бежевый",
             "Коричневый","Желтый","Оранжевый","Фиолетовый"
@@ -23,7 +23,6 @@ namespace Kursovaya.Views
         private readonly string[] _fuel = { "Бензин", "Дизель", "Гибрид", "Электро" };
         private readonly string[] _trans = { "МКПП", "АКПП", "Вариатор", "Робот" };
 
-        // Жёстко задаём статусы под CHECK в БД (без сюрпризов)
         private readonly string[] _allowedStatuses = { "В наличии", "В резерве", "Продано" };
 
         private const string SalonClientName = "[СИСТЕМА] Автосалон";
@@ -46,7 +45,7 @@ namespace Kursovaya.Views
 
         private Clients GetOrCreateSalonClient()
         {
-            // Важно: всё в том же контексте
+         
             var salon = _db.Clients.FirstOrDefault(c => c.FullName == SalonClientName);
             if (salon != null) return salon;
 
@@ -61,7 +60,7 @@ namespace Kursovaya.Views
 
         private void ValidateForm()
         {
-            // VIN обязателен (из-за возможного UNIQUE)
+         
             bool required =
                 !string.IsNullOrWhiteSpace(VinBox.Text) &&
                 !string.IsNullOrWhiteSpace(BrandBox.Text) &&
@@ -94,7 +93,7 @@ namespace Kursovaya.Views
                 var trans = (TransmissionCombo.SelectedItem as string) ?? "";
                 var year = (int)(YearCombo.SelectedItem ?? DateTime.Now.Year);
 
-                // Предвалидация против типичных CHECK
+            
                 if (vin.Length < 3)
                 {
                     MessageBox.Show("Введите корректный VIN (минимум 3 символа).", "Автомобиль",
@@ -149,7 +148,7 @@ namespace Kursovaya.Views
                     }
                 }
 
-                // Проверка уникальности VIN
+           
                 if (_db.Vehicles.Any(v => v.VIN == vin))
                 {
                     MessageBox.Show("Автомобиль с таким VIN уже существует.", "Автомобиль",
@@ -157,7 +156,7 @@ namespace Kursovaya.Views
                     return;
                 }
 
-                // Проверка уникальности Plate (если указан)
+             
                 if (!string.IsNullOrWhiteSpace(plate) && _db.Vehicles.Any(v => v.Plate == plate))
                 {
                     MessageBox.Show("Автомобиль с таким гос. номером уже существует.", "Автомобиль",
@@ -165,7 +164,7 @@ namespace Kursovaya.Views
                     return;
                 }
 
-                // Статус должен быть строго из разрешённых
+              
                 if (!_allowedStatuses.Contains(status))
                 {
                     MessageBox.Show("Недопустимый статус. Выберите из списка.", "Автомобиль",
@@ -191,7 +190,7 @@ namespace Kursovaya.Views
                         Price = price,
                         Transmission = trans,
                         Fuel = fuel,
-                        EngineVolume = engineVol, // null допустим, если столбец nullable
+                        EngineVolume = engineVol, 
                         CreatedAt = DateTime.Now
                     };
 

@@ -18,13 +18,13 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <!-- Заголовок -->
+           
             <Border Grid.Row="0" Background="{StaticResource ButtonGradient}" CornerRadius="8,8,0,0" Padding="20,15">
                 <TextBlock Text="📥 ДОБАВЛЕНИЕ ПОСТАВКИ АВТОМОБИЛЯ"
                            FontSize="18" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center"/>
             </Border>
 
-            <!-- Форма -->
+       
             <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="25,18,25,10">
                 <StackPanel>
 
@@ -155,7 +155,7 @@
                 </StackPanel>
             </ScrollViewer>
 
-            <!-- Кнопки -->
+        
             <Border Grid.Row="2" Background="#F5F5F5" CornerRadius="0,0,8,8" Padding="16,12" BorderBrush="#E0E0E0" BorderThickness="0,1,0,0">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                     <Button Content="Отмена" Width="120" Height="36" Click="Cancel_Click" Background="#757575" Margin="0,0,8,0"/>

@@ -65,7 +65,6 @@ namespace Kursovaya.Views
                 UserInfoText.Text = $"Пользователь: {_currentUser.Email} ({_currentUser.Role})";
         }
 
-        // ===== Users =====
         private void AddUser_Click(object sender, RoutedEventArgs e)
         {
             var addWindow = new AddUserWindow { Owner = this };
@@ -85,22 +84,18 @@ namespace Kursovaya.Views
             var u = UsersGrid.SelectedItem as Users;
             if (u == null) return;
 
-            // Защита: нельзя удалить себя
             if (u.Id == _currentUser.Id)
             {
                 MessageBox.Show("Нельзя удалить пользователя, под которым вы вошли.", "Удаление пользователя",
                     MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
-
-            // Подсчёт зависимостей
             var salesCount = _db.Sales.Count(s => s.SellerId == u.Id);
             var resCount = _db.Reservations.Count(r => r.ReservedBy == u.Id);
             var deps = salesCount + resCount;
 
             if (deps > 0)
             {
-                // Предложение вариантов действий
                 var msg =
                     $"У пользователя {u.Email} есть связанные записи:\n" +
                     $"- Продажи: {salesCount}\n" +
@@ -116,7 +111,6 @@ namespace Kursovaya.Views
 
                 if (answer == MessageBoxResult.No)
                 {
-                    // Мягкое удаление: деактивация
                     u.IsActive = false;
                     if (TrySaveDetailed("Пользователи"))
                         MessageBox.Show("Пользователь деактивирован (IsActive = false).", "Пользователи",
@@ -126,7 +120,6 @@ namespace Kursovaya.Views
 
                 if (answer == MessageBoxResult.Yes)
                 {
-                    // Переназначение всех зависимостей на текущего пользователя и удаление
                     var current = _db.Users.Local.FirstOrDefault(x => x.Id == _currentUser.Id) ?? _db.Users.Find(_currentUser.Id);
                     if (current == null)
                     {
@@ -139,17 +132,14 @@ namespace Kursovaya.Views
                     {
                         try
                         {
-                            // Переназначаем продажи
                             foreach (var s in _db.Sales.Where(s => s.SellerId == u.Id))
                                 s.SellerId = current.Id;
 
-                            // Переназначаем резервы
                             foreach (var r in _db.Reservations.Where(r => r.ReservedBy == u.Id))
                                 r.ReservedBy = current.Id;
 
                             _db.SaveChanges();
 
-                            // Теперь удаляем пользователя
                             _db.Users.Remove(u);
                             _db.SaveChanges();
 
@@ -177,7 +167,7 @@ namespace Kursovaya.Views
                 }
             }
 
-            // Нет зависимостей — обычное удаление
+
             if (MessageBox.Show($"Удалить пользователя {u.Email}?", "Подтверждение",
                 MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
@@ -240,7 +230,6 @@ namespace Kursovaya.Views
             }
         }
 
-        // ===== Helpers =====
         private bool TrySaveDetailed(string title)
         {
             try

@@ -8,7 +8,7 @@
 
     <DockPanel>
 
-        <!-- Шапка: заголовок, инфо о пользователе и кнопка Выход -->
+    
         <StackPanel DockPanel.Dock="Top" Margin="10,10,10,0">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -39,7 +39,6 @@
                 </StackPanel>
             </Grid>
 
-            <!-- Карточки статистики -->
             <Border Background="#F5F5F5"
                     CornerRadius="6"
                     Padding="10"
@@ -103,15 +102,15 @@
                 </WrapPanel>
             </Border>
 
-            <!-- Многострочная сводка (скрыта, можно включить при необходимости) -->
+       
             <TextBlock x:Name="StatisticsText"
                        Visibility="Collapsed"
                        Margin="0,6,0,0"/>
         </StackPanel>
 
-        <!-- Основной контент -->
+
         <TabControl Margin="10">
-            <!-- Пользователи -->
+
             <TabItem Header="Пользователи">
                 <Grid Margin="0">
                     <Grid.RowDefinitions>

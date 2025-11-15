@@ -282,7 +282,7 @@
                 </Grid>
             </TabItem>
 
-            <!-- Продажи -->
+
             <TabItem Header="💰 Продажи">
                 <Grid Margin="10">
                     <Grid.RowDefinitions>
@@ -411,7 +411,6 @@
                 </Grid>
             </TabItem>
 
-            <!-- Поиск -->
             <TabItem Header="🔍 Поиск">
                 <Grid Margin="10">
                     <Grid.RowDefinitions>
