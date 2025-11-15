@@ -4,7 +4,7 @@
              StartupUri="Views/LoginWindow.xaml">
     <Application.Resources>
 
-        <!-- Цветовая палитра -->
+ 
         <SolidColorBrush x:Key="PrimaryColor" Color="#2196F3"/>
         <SolidColorBrush x:Key="PrimaryDarkColor" Color="#1976D2"/>
         <SolidColorBrush x:Key="PrimaryLightColor" Color="#64B5F6"/>
@@ -13,8 +13,6 @@
         <SolidColorBrush x:Key="SurfaceColor" Color="#FFFFFF"/>
         <SolidColorBrush x:Key="TextColor" Color="#212121"/>
         <SolidColorBrush x:Key="TextSecondaryColor" Color="#757575"/>
-
-        <!-- Градиенты -->
         <LinearGradientBrush x:Key="BackgroundGradient" StartPoint="0,0" EndPoint="1,1">
             <GradientStop Color="#E3F2FD" Offset="0"/>
             <GradientStop Color="#BBDEFB" Offset="1"/>
@@ -30,7 +28,6 @@
             <GradientStop Color="#1976D2" Offset="1"/>
         </LinearGradientBrush>
 
-        <!-- Глобальные настройки окон (DPI, текст, рендер) -->
         <Style TargetType="{x:Type Window}">
             <Setter Property="UseLayoutRounding" Value="True"/>
             <Setter Property="SnapsToDevicePixels" Value="True"/>
@@ -39,7 +36,6 @@
             <Setter Property="Background" Value="{StaticResource BackgroundGradient}"/>
         </Style>
 
-        <!-- Кнопки -->
         <Style TargetType="Button">
             <Setter Property="Background" Value="{StaticResource ButtonGradient}"/>
             <Setter Property="Foreground" Value="White"/>
@@ -78,7 +74,6 @@
             </Style.Triggers>
         </Style>
 
-        <!-- Текстовое поле: БЕЗ кастомного шаблона (дефолтный), центр по вертикали -->
         <Style TargetType="TextBox">
             <Setter Property="Background" Value="White"/>
             <Setter Property="BorderBrush" Value="#BDBDBD"/>
@@ -99,7 +94,6 @@
             </Style.Triggers>
         </Style>
 
-        <!-- PasswordBox: центр по вертикали, высота -->
         <Style TargetType="PasswordBox">
             <Setter Property="Background" Value="White"/>
             <Setter Property="BorderBrush" Value="#BDBDBD"/>
@@ -117,7 +111,7 @@
             </Style.Triggers>
         </Style>
 
-        <!-- ComboBox: нормальная высота, центр по вертикали -->
+
         <Style TargetType="ComboBox">
             <Setter Property="Background" Value="White"/>
             <Setter Property="BorderBrush" Value="#BDBDBD"/>
@@ -138,7 +132,7 @@
             </Style.Triggers>
         </Style>
 
-        <!-- DataGrid: ровные строки/заголовки -->
+
         <Style TargetType="DataGrid">
             <Setter Property="Background" Value="White"/>
             <Setter Property="BorderBrush" Value="#E0E0E0"/>
@@ -178,7 +172,7 @@
             </Style.Triggers>
         </Style>
 
-        <!-- Для текста в DataGrid (обрезка по символам) -->
+
         <Style x:Key="DataGridTextBlockStyle" TargetType="TextBlock">
             <Setter Property="TextWrapping" Value="NoWrap"/>
             <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
@@ -186,7 +180,7 @@
             <Setter Property="SnapsToDevicePixels" Value="True"/>
         </Style>
 
-        <!-- TabControl/TabItem как были -->
+
         <Style TargetType="TabControl">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
